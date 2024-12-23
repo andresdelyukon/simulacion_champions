@@ -10,6 +10,7 @@ public class Equipo {
     //Se tiene que poner en el marcador los goles que el equipo vaya marcando solamente.
     private int goles_favor = 0;
     private int goles_contra = 0;
+    public int puntos = 0;
 
     private ArrayList<Jugador> jugador;
 
@@ -97,4 +98,11 @@ public class Equipo {
     //una forma sencilla de usar el ranking es
 
 
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
 }

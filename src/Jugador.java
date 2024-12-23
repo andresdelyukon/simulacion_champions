@@ -4,11 +4,19 @@ public class Jugador {
     //el ranking nos va a indicar que tan bueno es el jugador
     private int ranking;
     private String tipo;
-
+    public int goles;
     private String equipo;
 
     //el parametro de tipo ya da la posicion
 
+
+    public int getGoles() {
+        return goles;
+    }
+
+    public void setGoles(int goles) {
+        this.goles = goles;
+    }
 
     public int getID() {
         return ID;
