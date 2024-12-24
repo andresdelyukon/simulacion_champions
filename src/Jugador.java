@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Jugador {
     private int ID;
     private String nombre;
@@ -6,6 +8,8 @@ public class Jugador {
     private String tipo;
     public int goles;
     private String equipo;
+
+
 
     //el parametro de tipo ya da la posicion
 

@@ -1,9 +1,14 @@
 import java.util.HashMap;
 
 public class Partido {
+    private Delantero delanteroLocal;
+    private Delantero delanteroVisitante;
+    private Equipo equipoLocal;
+    private Equipo equipoVisitante;
     private int id;
     private String ganador;
     private HashMap<String, Integer> marcador;
+
 
     // Constructor
     public Partido() {
@@ -73,6 +78,47 @@ public class Partido {
         return marcadorLocal;
     }
 
-    //jaja me salen puros empates pero ya va andando este pedo 
+    //jaja me salen puros empates pero ya va andando este pedo
+
+    public void simulacionJuego(double probabilidadAnotar1, double probabilidadAnotar2) {
+        for (int i = 0; i < 10; i++) {
+            delanteroLocal.anotar(probabilidadAnotar1);
+            delanteroVisitante.anotar(probabilidadAnotar2);
+            sumar_marcador(delanteroLocal, equipoLocal, probabilidadAnotar1);
+            sumar_marcador(delanteroVisitante, equipoVisitante, probabilidadAnotar2);
+        }
+    }
+
+    public Delantero getDelanteroLocal() {
+        return delanteroLocal;
+    }
+
+    public void setDelanteroLocal(Delantero delanteroLocal) {
+        this.delanteroLocal = delanteroLocal;
+    }
+
+    public Delantero getDelanteroVisitante() {
+        return delanteroVisitante;
+    }
+
+    public void setDelanteroVisitante(Delantero delanteroVisitante) {
+        this.delanteroVisitante = delanteroVisitante;
+    }
+
+    public Equipo getEquipoLocal() {
+        return equipoLocal;
+    }
+
+    public void setEquipoLocal(Equipo equipoLocal) {
+        this.equipoLocal = equipoLocal;
+    }
+
+    public Equipo getEquipoVisitante() {
+        return equipoVisitante;
+    }
+
+    public void setEquipoVisitante(Equipo equipoVisitante) {
+        this.equipoVisitante = equipoVisitante;
+    }
 }
 

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Equipo {
     private int ID;
@@ -14,6 +15,9 @@ public class Equipo {
 
     private ArrayList<Jugador> jugador;
 
+
+
+
     //ocupo un metodo para meter 11 jugadores
 
 
@@ -23,6 +27,7 @@ public class Equipo {
         this.ranking = ranking;
         this.goles_favor = goles_favor;
         this.goles_contra = goles_contra;
+
     }
 
     public int getID() {
