@@ -68,15 +68,20 @@ public class Main {
                 String resultado = simularPartido(delanteroLocal, delanteroVisitante, equipoLocal, equipoVisitante);
 
                 // Determinamos al ganador y sumamos los puntos
-                String ganador = resultado.split(":")[0];
-                if (ganador.equals(equipoLocal.getNombre())) {
-                    tablaEquiposParticipantes.put(equipoLocal.getNombre(), tablaEquiposParticipantes.getOrDefault(equipoLocal.getNombre(), 0) + 3);
-                } else if (ganador.equals(equipoVisitante.getNombre())) {
-                    tablaEquiposParticipantes.put(equipoVisitante.getNombre(), tablaEquiposParticipantes.getOrDefault(equipoVisitante.getNombre(), 0) + 3);
-                } else {
+
+
+                if (resultado.startsWith(equipoLocal.getNombre())) {
+                    int puntosActualesLocal = tablaEquiposParticipantes.get(equipoLocal.getNombre()) + 3;
+                    tablaEquiposParticipantes.put(equipoLocal.getNombre(), puntosActualesLocal);
+                } else if (resultado.startsWith((equipoVisitante.getNombre()))) {
+                    int puntosActualesVisita = tablaEquiposParticipantes.get(equipoVisitante.getNombre()) + 3;
+                    tablaEquiposParticipantes.put(equipoVisitante.getNombre(), puntosActualesVisita);
+                } else if(resultado.contains("Empate")) {
                     // Empate: sumamos 1 punto a ambos equipos
-                    tablaEquiposParticipantes.put(equipoLocal.getNombre(), tablaEquiposParticipantes.getOrDefault(equipoLocal.getNombre(), 0) + 1);
-                    tablaEquiposParticipantes.put(equipoVisitante.getNombre(), tablaEquiposParticipantes.getOrDefault(equipoVisitante.getNombre(), 0) + 1);
+                    int puntosActualesLocal = tablaEquiposParticipantes.get(equipoLocal.getNombre()) + 1;
+                    int puntosActualesVisita = tablaEquiposParticipantes.get(equipoVisitante.getNombre()) + 1;
+                    tablaEquiposParticipantes.put(equipoLocal.getNombre(),  puntosActualesLocal);
+                    tablaEquiposParticipantes.put(equipoVisitante.getNombre(),  puntosActualesVisita);
                 }
 
                 // Imprimimos el resultado del partido
@@ -89,6 +94,24 @@ public class Main {
         for (Map.Entry<String, Integer> entry : tablaEquiposParticipantes.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue() + " puntos");
         }
+
+        //registrar al ganador. Es un for loop que busca en los valores y devuelve el mayor
+        int n = 0;
+        for (int i : tablaEquiposParticipantes.values()){
+            if(i > n){
+                n = i;
+            }
+
+        }
+        //nomas me falta sacar la llave asociada al valor. Se ocupa otro loop
+
+        for (String k : tablaEquiposParticipantes.keySet()){
+            //get se usa en los hashMap para acceder al valor asociado a una clave
+            if(tablaEquiposParticipantes.get(k) == n){
+                System.out.println("El equipo ganador es " + k + " con "+ n + " puntos");
+            }
+        }
+
     }
 
 
@@ -97,10 +120,13 @@ public class Main {
             return "Error: uno de los delanteros es null.";
         }
 
+        HashMap<String, Integer> tabla = torneo.getTabla_posiciones();
         Partido partido = new Partido();
 
-        double probabilidadLocal = 0.3; // Probabilidad de que el delantero local anote
-        double probabilidadVisitante = 0.3; // Probabilidad de que el delantero visitante anote
+        //hay una forma más fácil. usar un random
+        double probabilidadLocal = 0.2; // Probabilidad aleatoria para el delantero local
+        double probabilidadVisitante = 0.6; // Probabilidad aleatoria para el delantero visitante
+        
 
         // Anotación de goles
         delanteroLocal.anotar(probabilidadLocal);
@@ -115,10 +141,15 @@ public class Main {
         int golesVisitante = partido.getMarcadorEquipo(equipoVisitante.getNombre()).get(equipoVisitante.getNombre());
 
         if (golesLocal > golesVisitante) {
+            tabla.put(String.valueOf(equipoLocal), tabla.getOrDefault(equipoLocal, 0) + 3);
             return equipoLocal.getNombre() + " gana con " + golesLocal + " goles";
+
         } else if (golesVisitante > golesLocal) {
+            tabla.put(String.valueOf(equipoVisitante), tabla.getOrDefault(equipoVisitante, 0) + 3);
             return equipoVisitante.getNombre() + " gana con " + golesVisitante + " goles";
         } else {
+            tabla.put(String.valueOf(equipoLocal), tabla.getOrDefault(equipoLocal, 0) + 1); // Sumar 1 punto
+            tabla.put(String.valueOf(equipoVisitante), tabla.getOrDefault(equipoVisitante, 0) + 1);
             return "Empate entre " + equipoLocal.getNombre() + " y " + equipoVisitante.getNombre() + " con " + golesLocal + " goles";
         }
     }
